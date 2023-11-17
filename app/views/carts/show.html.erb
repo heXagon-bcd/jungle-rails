@@ -15,17 +15,25 @@
         </tr>
       </thead>
       <tbody>
+      <% if enhanced_cart.empty? %>
+        <tr>
+          <td colspan="5" class="text-center">
+            Your cart is empty. <%= link_to "Go back to the home page", root_path %>.
+          </td>
+        </tr>
+      <% else %>
         <% enhanced_cart.each do |item| %>
           <%= render 'item', product: item[:product], quantity: item[:quantity].to_i %>
         <% end %>
-      </tbody>
+      <% end %>
+    </tbody>  
       <tfoot>
         <tr>
           <th colspan="4">
             TOTAL:
           </th>
           <th>
-            <%= cart_subtotal_cents / 100.0 %>
+            <%= number_to_currency(cart_subtotal_cents / 100.0, unit: "$", precision: 2) %>
           </th>
         </tr>
       </tfoot>
